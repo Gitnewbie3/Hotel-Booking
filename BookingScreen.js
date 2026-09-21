@@ -33,35 +33,45 @@ export default function BookingScreen() {
   // Restore BOTH saved hotels and selected city when this screen loads.
   // Use try/catch/finally and end with isLoading false.
 
-  const loadInitialData = async () => {
-  try {
-    const savedHotels = await loadHotels();
-    const selectedCity = await loadSelectedCity();
-    
-    // Update state with restored data
-    setSavedHotels(savedHotels);
-    setSelectedCity(selectedCity);
-  } catch (error) {
-    console.error('Failed to load initial data:', error);
-  } finally {
-    setIsLoading(false);
+  useEffect(() => {
+  async function loadInitialData() {
+    try {
+      const savedHotels = await loadHotels();
+      const selectedCity = await loadSelectedCity();
+      
+      if (savedHotels) setSavedHotels(savedHotels);
+      if (selectedCity) setSelectedCityId(selectedCity);
+    } catch (error) {
+      console.error('Failed to load startup data:', error);
+    } finally {
+      setIsLoading(false); // <--- This line allows the app to stop loading
+    }
   }
-};
+
+  loadInitialData();
+}, []);
 
   const visibleHotels = hotels.filter(
     (hotel) => hotel.cityId === selectedCityId
   );
 
   async function handleSelectCity(cityId) {
-    // TODO 7:
-    // Update selectedCityId and persist the selected city.
+    setSelectedCityId(cityId);
+    await saveSelectedCity(cityId);
   }
 
   async function toggleSavedHotel(hotel) {
-    // TODO 8:
-    // If hotel is already saved, remove it.
-    // Otherwise add it.
-    // Update React state and AsyncStorage using the SAME updated array.
+    const isAlreadySaved = savedHotels.some((h) => h.id === hotel.id);
+
+    let updatedHotels;
+    if (isAlreadySaved) {
+      updatedHotels = savedHotels.filter((h) => h.id !== hotel.id);
+    } else {
+      updatedHotels = [...savedHotels, hotel];
+    }
+
+    setSavedHotels(updatedHotels);
+    await saveHotels(updatedHotels);
   }
 
   async function removeSavedHotel(hotelId) {
