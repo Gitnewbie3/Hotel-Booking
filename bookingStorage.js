@@ -4,29 +4,46 @@ export const SAVED_HOTELS_KEY = 'stayfinder-saved-hotels';
 export const SELECTED_CITY_KEY = 'stayfinder-selected-city';
 
 export async function saveHotels(hotels) {
-  // TODO 1:
-  // Save hotels using SAVED_HOTELS_KEY and JSON.stringify().
+  try {
+    const jsonValue = JSON.stringify(hotels);
+    await AsyncStorage.setItem(SAVED_HOTELS_KEY, jsonValue);
+  } catch (e) {
+    console.error('Failed to save hotels to storage', e);
+  }
 }
 
 export async function loadHotels() {
-  // TODO 2:
-  // Load SAVED_HOTELS_KEY.
-  // Return [] if nothing has been saved.
-  // Otherwise return JSON.parse(storedValue).
+  try {
+    const value = await AsyncStorage.getItem(SAVED_HOTELS_KEY);
+    return value != null ? JSON.parse(value) : [];
+  } catch (e) {
+    console.error('Failed to load hotels from storage', e);
+    return [];
+  }
 }
 
 export async function clearSavedHotels() {
-  // TODO 3:
-  // Remove only SAVED_HOTELS_KEY.
+  try {
+    await AsyncStorage.removeItem(SAVED_HOTELS_KEY);
+  } catch (e) {
+    console.error('Failed to clear saved hotels from storage', e);
+  }
 }
 
 export async function saveSelectedCity(cityId) {
-  // TODO 4:
-  // Save cityId using SELECTED_CITY_KEY.
+  try {
+    await AsyncStorage.setItem(SELECTED_CITY_KEY, cityId);
+  } catch (e) {
+    console.error('Failed to save selected city to storage', e);
+  }
 }
 
 export async function loadSelectedCity() {
-  // TODO 5:
-  // Load SELECTED_CITY_KEY.
-  // Return 'houston' if nothing has been saved.
+  try {
+    const value = await AsyncStorage.getItem(SELECTED_CITY_KEY);
+    return value != null ? value : 'houston';
+  } catch (e) {
+    console.error('Failed to load selected city from storage', e);
+    return 'houston';
+  }
 }

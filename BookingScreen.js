@@ -9,18 +9,18 @@ import {
   View,
 } from 'react-native';
 
-import BookingHeader from '../components/BookingHeader';
-import CitySelector from '../components/CitySelector';
-import HotelCard from '../components/HotelCard';
-import SavedPanel from '../components/SavedPanel';
-import { cities, hotels } from '../data/hotels';
+import BookingHeader from './BookingHeader';
+import CitySelector from './CitySelector';
+import HotelCard from './HotelCard';
+import SavedPanel from './SavedPanel';
+import { cities, hotels } from './hotels';
 import {
   clearSavedHotels,
   loadHotels,
   loadSelectedCity,
   saveHotels,
   saveSelectedCity,
-} from '../services/bookingStorage';
+} from './bookingStorage';
 
 export default function BookingScreen() {
   const [selectedCityId, setSelectedCityId] = useState('houston');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import BookingScreen from './src/screens/BookingScreen';
+import BookingScreen from './BookingScreen';
 
 export default function App() {
   return (
