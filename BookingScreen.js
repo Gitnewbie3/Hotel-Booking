@@ -33,6 +33,21 @@ export default function BookingScreen() {
   // Restore BOTH saved hotels and selected city when this screen loads.
   // Use try/catch/finally and end with isLoading false.
 
+  const loadInitialData = async () => {
+  try {
+    const savedHotels = await loadHotels();
+    const selectedCity = await loadSelectedCity();
+    
+    // Update state with restored data
+    setSavedHotels(savedHotels);
+    setSelectedCity(selectedCity);
+  } catch (error) {
+    console.error('Failed to load initial data:', error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
   const visibleHotels = hotels.filter(
     (hotel) => hotel.cityId === selectedCityId
   );
