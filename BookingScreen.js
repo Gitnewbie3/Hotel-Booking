@@ -44,7 +44,7 @@ export default function BookingScreen() {
     } catch (error) {
       console.error('Failed to load startup data:', error);
     } finally {
-      setIsLoading(false); // <--- This line allows the app to stop loading
+      setIsLoading(false); 
     }
   }
 
@@ -85,7 +85,7 @@ export default function BookingScreen() {
       // Remove only the saved-hotels storage key
       await AsyncStorage.removeItem('savedHotels');
       
-      // Reset state to empty array
+     
       setSavedHotels([]);
     } catch (error) {
       console.error('Failed to clear saved hotels:', error);
