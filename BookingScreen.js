@@ -81,8 +81,15 @@ export default function BookingScreen() {
   }
 
   async function clearAllSavedHotels() {
-    // TODO 10:
-    // Remove only the saved-hotels storage key and set state to [].
+    try {
+      // Remove only the saved-hotels storage key
+      await AsyncStorage.removeItem('savedHotels');
+      
+      // Reset state to empty array
+      setSavedHotels([]);
+    } catch (error) {
+      console.error('Failed to clear saved hotels:', error);
+    }
   }
 
   const isSaved = (hotelId) =>
